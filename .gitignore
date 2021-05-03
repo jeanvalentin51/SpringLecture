@@ -25,7 +25,7 @@
 .classpath
 .project
 .settings/
-.target/
+.target/*
 
 # Apple files
 *.DS_Store
