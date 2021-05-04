@@ -1,5 +1,7 @@
 package com.valentin.lecture.entities;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,7 @@ public class EventType {
 
     @Id
     @Column(name = "type_id")
+    @ApiModelProperty (value = "This is the primary key")
     private int typeId;
 
     @Column(name = "event_type", nullable = false, length = 100)

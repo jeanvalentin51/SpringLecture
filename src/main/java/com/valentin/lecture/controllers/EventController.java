@@ -3,6 +3,7 @@ package com.valentin.lecture.controllers;
 import com.valentin.lecture.entities.EventType;
 import com.valentin.lecture.repositories.EventRepository;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,7 @@ public class EventController {
 
 
     @GetMapping
+    @ApiOperation(value = "Retrieve all records")
     public ResponseEntity<Iterable<EventType>> findAllEventTypes (){
 
         List<EventType> allRecords = new ArrayList<>();
@@ -43,6 +45,7 @@ public class EventController {
 
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Get specific event type based on id")
     public ResponseEntity<EventType> findByTypeId (@PathVariable (value = "id") int typeId){
 
         try{
@@ -57,6 +60,7 @@ public class EventController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @ApiOperation(value = "Delete event type by id")
     public void deleteEventType (@PathVariable (value = "id") int typeId){
 
         try {
@@ -68,6 +72,7 @@ public class EventController {
 
 
     @PostMapping
+    @ApiOperation(value = "Create new event type")
     public EventType addNewEventType (@Validated @RequestBody EventType newEventType){
 
         try{
@@ -81,6 +86,7 @@ public class EventController {
 
     @PutMapping("/{id}")
     @Transactional
+    @ApiOperation(value = "Update event type by id")
     public ResponseEntity<EventType> updateEvent (@PathVariable (value = "id") int typeId, @Validated @RequestBody EventType newEventType){
 
         EventType eventToUpdate = repository.findEventTypeByTypeId(typeId);
