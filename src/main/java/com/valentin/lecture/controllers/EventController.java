@@ -5,8 +5,10 @@ import com.valentin.lecture.repositories.EventRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,5 +55,48 @@ public class EventController {
     }
 
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void deleteEventType (@PathVariable (value = "id") int typeId){
+
+        try {
+            repository.deleteById(typeId);
+        } catch (Exception e) {
+            // log error
+        }
+    }
+
+
+    @PostMapping
+    public EventType addNewEventType (@Validated @RequestBody EventType newEventType){
+
+        try{
+            return repository.save(newEventType);
+        } catch (Exception e) {
+            // log error
+            return null;
+        }
+    }
+
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<EventType> updateEvent (@PathVariable (value = "id") int typeId, @Validated @RequestBody EventType newEventType){
+
+        EventType eventToUpdate = repository.findEventTypeByTypeId(typeId);
+        EventType updatedRecord = null;
+
+        try {
+            eventToUpdate.setEventType(newEventType.getEventType());
+            eventToUpdate.setTypeId(newEventType.getTypeId());
+
+            updatedRecord = repository.save(eventToUpdate);
+
+            return ResponseEntity.ok(updatedRecord);
+        } catch (Exception e) {
+            // log error
+            return ResponseEntity.noContent().build();
+        }
+    }
 
 }
