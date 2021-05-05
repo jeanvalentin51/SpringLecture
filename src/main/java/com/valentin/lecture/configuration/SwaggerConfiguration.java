@@ -15,8 +15,9 @@ public class SwaggerConfiguration {
     public Docket api (){
         return new Docket (DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(com.valentin.lecture.controllers.EventController.class.getPackage().getName()))
+//                .apis(RequestHandlerSelectors.basePackage(com.valentin.lecture.controllers.EventController.class.getPackage().getName()))
                 .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.valentin"))
                 .build();
     }
 
