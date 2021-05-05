@@ -73,4 +73,24 @@ class EventControllerTest {
 
     }
 
+
+    @Test
+    void deleteEventTypeErrorTest() throws Exception {
+
+        int typeId = 1;
+
+        BDDMockito
+                .given(repository.existsById(typeId))
+                .willReturn(false);
+        BDDMockito
+                .doThrow(new RuntimeException("Id not found"))
+                .when(repository).deleteById(typeId);
+
+        this.mvc.perform(MockMvcRequestBuilders
+                .delete("/api/events/" + typeId))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+
+    }
+
 }
