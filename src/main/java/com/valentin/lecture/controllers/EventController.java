@@ -4,6 +4,8 @@ import com.valentin.lecture.entities.EventType;
 import com.valentin.lecture.repositories.EventRepository;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +29,11 @@ public class EventController {
 
     @GetMapping
     @ApiOperation(value = "Retrieve all records")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 401, message = "You are not authorized"),
+            @ApiResponse(code = 403, message = "Resource forbidden")
+    })
     public ResponseEntity<Iterable<EventType>> findAllEventTypes (){
 
         List<EventType> allRecords = new ArrayList<>();
