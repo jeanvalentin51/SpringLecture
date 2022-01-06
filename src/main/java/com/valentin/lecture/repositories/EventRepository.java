@@ -14,7 +14,8 @@ public interface EventRepository extends JpaRepository<EventType,Integer> {
 
 /*
 Tip: retrieve records by custom query
-Names MUST match (afterdate and beforedate)
+- Names MUST match (afterdate and beforedate)
+- Useful when one field has underscore in it: findEventTypeByType_Id
 
     @Query("FROM Event WHERE startDate >= : afterdate AND endDate <= : beforedate")
     List<Event> findEventByStartDateAfterAndEndDateBefore (@Param("afterdate") Date startdate, @Param("beforedate") Date enddate);
