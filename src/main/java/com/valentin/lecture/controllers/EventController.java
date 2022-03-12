@@ -3,6 +3,7 @@ package com.valentin.lecture.controllers;
 import com.valentin.lecture.entities.EventType;
 import com.valentin.lecture.repositories.EventRepository;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,15 +30,23 @@ public class EventController {
 
         List<EventType> allRecords = new ArrayList<>();
 
-        for (EventType each : repository.findAll()) {
-            allRecords.add(each);
-        }
+        try{
 
-        if(allRecords.size()!=0){
-            return ResponseEntity.ok(allRecords);
-        } else {
+            for (EventType each : repository.findAll()) {
+                allRecords.add(each);
+            }
+
+            if(allRecords.size()!=0){
+                return ResponseEntity.ok(allRecords);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+
+        } catch (Exception e) {
+            // log error
             return ResponseEntity.noContent().build();
         }
+
 
     }
 
@@ -83,10 +92,11 @@ public class EventController {
     @Transactional
     public ResponseEntity<EventType> updateEvent (@PathVariable (value = "id") int typeId, @Validated @RequestBody EventType newEventType){
 
-        EventType eventToUpdate = repository.findEventTypeByTypeId(typeId);
-        EventType updatedRecord = null;
 
         try {
+            EventType eventToUpdate = repository.findEventTypeByTypeId(typeId);
+            EventType updatedRecord = null;
+
             eventToUpdate.setEventType(newEventType.getEventType());
             eventToUpdate.setTypeId(newEventType.getTypeId());
 
@@ -100,3 +110,4 @@ public class EventController {
     }
 
 }
+
