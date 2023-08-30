@@ -28,13 +28,9 @@ public class EventController {
     @GetMapping
     public ResponseEntity<Iterable<EventType>> findAllEventTypes (){
 
-        List<EventType> allRecords = new ArrayList<>();
-
         try{
 
-            for (EventType each : repository.findAll()) {
-                allRecords.add(each);
-            }
+            List<EventType> allRecords = new ArrayList<>(repository.findAll());
 
             if(allRecords.size()!=0){
                 return ResponseEntity.ok(allRecords);
